@@ -1,0 +1,19 @@
+#Simpsons dataset Queries
+#NB: Results are piped to jq command (linux) to show only revelant field for verification
+
+#Match season 5 episodes containing ‘homer’ in their title 
+curl -XPOST "http://localhost:9200/simpsons_episodes/_search " -H 'Content-Type: application/json' -d' { "query": { "bool": { "must": [ { "match": { "title": "homer" } }, { "match": { "season": 5 } } ] } } }' | 
+    jq '.hits.hits | .[] | {season: ._source.season, title: ._source.title}'
+
+#Match episodes containing ‘homer’ or ‘bart’ in their title with imdb_rating > 8
+curl -XPOST "http://localhost:9200/simpsons_episodes/_search" -H 'Content-Type: application/json' -d'{
+    "query": {
+        "bool": {
+            "must": [
+                { "bool": { "should": [ { "match": { "title": "homer" } }, { "match": { "title": "bart" } } ] } },
+                { "range": { "imdb_rating": { "gt": 8 } } }
+            ]
+        }
+    }
+}' | jq '.hits.hits | .[] | {imdb_rating: ._source.imdb_rating, title: ._source.title}'
+
