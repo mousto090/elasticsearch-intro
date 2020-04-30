@@ -10,6 +10,7 @@ The `docker-compose.yml` allow to set up a basic [elasticsearch](https://www.ela
 Make sure docker is runing then run `docker-compose up`
 
 Elasticsearch will be listening at http://localhost:9200
+
 Kibana will be listening at http://localhost:5601
 
 ## Data
@@ -17,8 +18,7 @@ The Simpsons [dataset](https://www.kaggle.com/wcukierski/the-simpsons-by-the-dat
 
 The datasets is loaded in elasticsearch using [logstash](https://www.elastic.co/downloads/logstash) 
 
-Install [logstash](https://www.elastic.co/downloads/logstash) 
 
-The logstash config for each dataset in `simpsons_dataset/logstash` folder
+The logstash config for each dataset is in `simpsons_dataset/logstash` folder
 
 `cd simpsons_dataset/logstash` then run `logstash -f simpsons_dataset/logstash/file_name.conf` for each logstash config file, first, you will need to ajust the `path` in each file 
